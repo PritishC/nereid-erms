@@ -13,5 +13,3 @@ class Employee(ModelSQL, ModelView):
     phone = fields.Integer("Phone Number", size=10, required=True, select=True)
     designation = fields.Char("Designation", required=True, select=True)
     address = fields.Text("Address", required=True, select=True)
-
-Pool.register(Employee)
