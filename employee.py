@@ -21,7 +21,7 @@ class Employee(ModelSQL, ModelView):
     def __setup__(cls):
         super(Employee, cls).__setup__()
         cls._sql_constraints = [
-            ('PrimaryKey', 'PRIMARY KEY(ID)', 'pk_error'),
+            #('PrimaryKey', 'PRIMARY KEY(ID)', 'pk_error'),
             ('UniqueEmail', 'UNIQUE(email)', 'unique_error'),
         ]
         cls._sql_error_messages = {
