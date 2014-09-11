@@ -10,12 +10,13 @@ class Employee(ModelSQL, ModelView):
     "Employee"
     __name__ = "employee.employee"
 
-    ID = fields.Integer("ID", size=4, required=True, select=True)
+    ID = fields.Numeric("ID", digits=(4,0), required=True, select=True)
     name = fields.Char("Name", required=True, select=True)
-    phone = fields.Integer("Phone Number", size=10, required=True, select=True)
+    phone = fields.Numeric("Phone Number", digits=(10,0), required=True, select=True)
     designation = fields.Char("Designation", required=True, select=True)
     address = fields.Text("Address", required=True, select=True)
-
+    email = fields.Char("E-Mail", required=True, select=True)
+    
     @classmethod
     def __setup__(cls):
         super(Employee, cls).__setup__()
