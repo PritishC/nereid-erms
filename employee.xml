@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+
+<tryton>
+    <data>
+        <!--<menuitem name="Employee" id="menu_employee" sequence="10" icon="tryton-list"/>-->
+        <record model="ir.ui.view" id="employee_view_tree">
+            <field name="model">employee.employee</field>
+            <field name="type">tree</field>
+            <field name="arch" type="xml">
+                <![CDATA[
+                <tree string="Employee">
+                    <field name="name"/>
+                    <field name="phone"/>
+                    <field name="designation"/>
+                    <field name="address"/>
+                    <field name="email"/>
+                </tree>
+                ]]>
+            </field>
+        </record>
+    </data>
+</tryton>
