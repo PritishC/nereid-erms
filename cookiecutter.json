@@ -1,0 +1,11 @@
+{
+    "author": "Pritish C",
+    "email": "pritish.chakraborty@openlabs.co.in",
+    "website": "http://www.openlabs.co.in/",
+    "module_name": "employee",
+    "module_prefix": "trytond",
+    "description": "Employee Record Management System",
+    "repo_name": "nereid-erms",
+    "version": "0.0.1",
+    "year": "2014"
+}
