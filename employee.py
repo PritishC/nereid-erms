@@ -10,7 +10,7 @@ class Employee(ModelSQL, ModelView):
     "Employee"
     __name__ = "employee.employee"
 
-    ID = fields.Numeric("ID", digits=(4,0), required=True, select=True)
+    #ID = fields.Numeric("ID", digits=(4,0), required=True, select=True)
     name = fields.Char("Name", required=True, select=True)
     phone = fields.Numeric("Phone Number", digits=(10,0), required=True, select=True)
     designation = fields.Char("Designation", required=True, select=True)
