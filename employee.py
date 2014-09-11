@@ -9,7 +9,9 @@ __all__ = ['Employee']
 class Employee(ModelSQL, ModelView):
     "Employee"
     __name__ = "employee.employee"
-    ID = fields.Integer()
-    name = fields.Char("Name")
+    name = fields.Char("Name", required=True, select=True)
+    phone = fields.Integer("Phone Number", size=10, required=True, select=True)
+    designation = fields.Char("Designation", required=True, select=True)
+    address = fields.Text("Address", required=True, select=True)
 
 Pool.register(Employee)
