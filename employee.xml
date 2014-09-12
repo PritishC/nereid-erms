@@ -2,33 +2,15 @@
 
 <tryton>
     <data>
-        <menuitem name="Employee" id="menu_employee" sequence="0" icon="tryton-list"/>
-
         <record model="ir.ui.view" id="employee_view_tree">
-            <field name="model">employee.employee</field>
-            <field name="type">tree</field>
-            <field name="arch" type="xml">
-                <![CDATA[
-                <tree string="Employee">
-                    <field name="name"/>
-                    <field name="phone"/>
-                    <field name="designation"/>
-                    <field name="address"/>
-                    <field name="email"/>
-                </tree>
-                ]]>
-            </field>
+            <field name="model">company.employee</field>
+            <field name="inherit" ref="company.employee_view_tree" />
+            <field name="name">employee_tree</field>
         </record>
-
-        <record model="ir.action.act_window" id="act_employee_form">
-            <field name="name">Employees</field>
-            <field name="res_model">employee.employee</field>
-        </record>
-
-        <record model="ir.action.act_window.view" id="act_employee_form_view1">
-            <field name="sequence" eval="10"/>
-            <field name="view" ref="employee_view_tree"/>
-            <field name="act_window" ref="act_employee_form"/>
+        <record model="ir.ui.view" id="employee_view_form">
+            <field name="model">company.employee</field>
+            <field name="inherit" ref="company.employee_view_form" />
+            <field name="name">employee_form</field>
         </record>
     </data>
 </tryton>
