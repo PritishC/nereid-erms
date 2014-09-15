@@ -12,3 +12,4 @@ class Employee:
     __name__ = "company.employee"
 
     designation = fields.Char("Designation", required=True, select=True)
+    dob = fields.Date("Date of Birth", required=True)
