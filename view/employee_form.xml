@@ -4,5 +4,7 @@
     <field name="designation" />
     <label name="dob" />
     <field name="dob" />
+    <label name="name" />
+    <field name="name" />
 </xpath>
 </data>
