@@ -21,7 +21,6 @@ class Employee:
                          'null_error')]
     _sql_error_messages = {'uniq_error': 'This field must be unique.',
                            'null_error': 'This field cannot be null.'}
-    
 
 class Identify(ModelSQL, ModelView):
     "Identify"
