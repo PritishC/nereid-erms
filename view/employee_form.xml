@@ -1,5 +1,7 @@
 <data>
-<xpath expr="/form/field[@name='company']" position="after">
+    <xpath expr="/form/field[@name='company']" position="after">
+    <label name="name" />
+    <field name="name" />
     <label name="designation" />
     <field name="designation" />
     <label name="dob" />
