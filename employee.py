@@ -36,7 +36,7 @@ class Identify(ModelSQL, ModelView):
                    'null_error'),
                   ('driver_not_null', 'NOT NULL(driver_id)',
                    'null_error')]
-        _uniques = [('pan_unique', 'UNIQUE(pan)', 'uniq_error'),
+    _uniques = [('pan_unique', 'UNIQUE(pan)', 'uniq_error'),
                 ('passport_unique', 'UNIQUE(passport)', 'uniq_error'),
                 ('driver_unique', 'UNIQUE(driver_id)', 'uniq_error')]
 
