@@ -2,5 +2,7 @@
 <xpath expr="/form/field[@name='company']" position="after">
     <label name="designation" />
     <field name="designation" />
+    <label name="dob" />
+    <field name="dob" />
 </xpath>
 </data>
