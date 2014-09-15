@@ -4,5 +4,8 @@
     <field name="designation" />
     <field name="dob" />
     <field name="name" />
+    <field name="pan" />
+    <field name="passport" />
+    <field name="driver_id" />
 </xpath>
 </data>

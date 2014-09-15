@@ -6,7 +6,11 @@
     <field name="designation" />
     <label name="dob" />
     <field name="dob" />
-    <label name="name" />
-    <field name="name" />
+    <label name="pan" />
+    <field name="pan" />
+    <label name="passport" />
+    <field name="passport" />
+    <label name="driver_id" />
+    <field name="driver_id" />
 </xpath>
 </data>
