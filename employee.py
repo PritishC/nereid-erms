@@ -14,8 +14,8 @@ class Employee:
     designation = fields.Char("Designation", required=True, select=True)
     dob = fields.Date("Date of Birth", required=True)
     name = fields.Char("Name", required=True, select=True)
-    pan = fields.Numeric("PAN", digits=(10,0), required=True)
-    passport = fields.Numeric("Passport Number", digits=(9,0), required=True)
+    pan = fields.Char("PAN", required=True)
+    passport = fields.Char("Passport Number", required=True)
     driver_id = fields.Char("Drivers License", required=True)
 
     _not_nulls = [('pan_not_null', 'NOT NULL(pan)', 'null_error'),
