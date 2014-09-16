@@ -11,6 +11,11 @@ class Employee:
     "Employee"
     __name__ = "company.employee"
 
+    gender = fields.Selection([
+        ('male', 'M'),
+        ('female', 'F'),
+        ('undefined', 'N/A'),
+    ], 'Gender')
     designation = fields.Char("Designation", required=True, select=True)
     dob = fields.Date("Date of Birth", required=True)
     pan = fields.Char("PAN", required=True)
