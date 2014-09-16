@@ -18,8 +18,8 @@ class Employee:
     ], 'Gender')
     designation = fields.Char("Designation", required=True, select=True)
     dob = fields.Date("Date of Birth", required=True)
-    pan = fields.Char("PAN", required=True)
-    passport = fields.Char("Passport Number", required=True)
+    pan = fields.Char("PAN", size=10, required=True)
+    passport = fields.Char("Passport Number", size=9, required=True)
     driver_id = fields.Char("Drivers License", required=True)
 
     _sql_error_messages = {'uniq_error': 'This field must be unique.',
