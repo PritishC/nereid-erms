@@ -22,18 +22,31 @@ class Employee:
     passport = fields.Char("Passport Number", required=True)
     driver_id = fields.Char("Drivers License", required=True)
 
-    _not_nulls = [('pan_not_null', 'NOT NULL(pan)', 'null_error'),
-                  ('passport_not_null', 'NOT NULL(passport)',
-                   'null_error'),
-                  ('driver_not_null', 'NOT NULL(driver_id)',
-                   'null_error'),
-                  ('dob_not_null', 'NOT NULL(dob)',
-                   'null_error')]
-
-    _uniques = [('pan_unique', 'UNIQUE(pan)', 'uniq_error'),
-                ('passport_unique', 'UNIQUE(passport)', 'uniq_error'),
-                ('driver_unique', 'UNIQUE(driver_id)', 'uniq_error')]
-
-    _sql_constraints = [x for x in _not_nulls] + [y for y in _uniques]
     _sql_error_messages = {'uniq_error': 'This field must be unique.',
                            'null_error': 'This field must be not null.'}
+
+    _not_nulls = [('pan_not_null', 'NOT NULL(pan)',
+                   _sql_error_messages['null_error']),
+                  ('passport_not_null', 'NOT NULL(passport)',
+                   _sql_error_messages['null_error']),
+                  ('driver_not_null', 'NOT NULL(driver_id)',
+                   _sql_error_messages['null_error']),
+                  ('dob_not_null', 'NOT NULL(dob)',
+                  _sql_error_messages['null_error'])]
+
+    _uniques = [('pan_unique', 'UNIQUE(pan)',
+                 _sql_error_messages['uniq_error']),
+                ('passport_unique', 'UNIQUE(passport)',
+                 _sql_error_messages['uniq_error']),
+                ('driver_unique', 'UNIQUE(driver_id)',
+                 _sql_error_messages['uniq_error'])]
+
+    @classmethod
+    def __setup__(cls):
+        super(Employee, cls).__setup__()
+        cls._sql_constraints = (#[x for x in cls._not_nulls] + 
+                                [y for y in cls._uniques])
+
+    @classmethod
+    def default_gender(cls):
+        return 'undefined'
