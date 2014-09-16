@@ -17,11 +17,11 @@ class Employee:
     "Employee"
     __name__ = "company.employee"
 
-    party = fields.Many2One('party.party', 'Party', required=True,
-                            select=True, states=STATES,
-                            depends=DEPENDS)
-    company = fields.Many2One('company.company', 'Company', required=True,
-                              select=True, states=STATES, depends=DEPENDS)
+    #party = fields.Many2One('party.party', 'Party', required=True,
+    #                        select=True, states=STATES,
+    #                        depends=DEPENDS)
+    #company = fields.Many2One('company.company', 'Company', required=True,
+    #                          select=True, states=STATES, depends=DEPENDS)
     gender = fields.Selection([
         ('male', 'M'),
         ('female', 'F'),
@@ -53,6 +53,10 @@ class Employee:
     @classmethod
     def __setup__(cls):
         super(Employee, cls).__setup__()
+        cls.party.states = STATES
+        cls.party.depends = DEPENDS
+        cls.company.states = STATES
+        cls.company.depends = DEPENDS
         cls._sql_constraints = ([x for x in cls._unique])
 
     @classmethod
