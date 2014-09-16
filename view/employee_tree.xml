@@ -6,5 +6,6 @@
     <field name="pan" />
     <field name="passport" />
     <field name="driver_id" />
+    <field name="active" />
 </xpath>
 </data>

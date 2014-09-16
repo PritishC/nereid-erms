@@ -12,5 +12,7 @@
     <field name="passport" />
     <label name="driver_id" />
     <field name="driver_id" />
+    <label name="active" />
+    <field name="active" />
 </xpath>
 </data>

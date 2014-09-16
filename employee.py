@@ -7,46 +7,58 @@ from trytond.pool import Pool, PoolMeta
 __all__ = ['Employee']
 __metaclass__ = PoolMeta
 
+STATES = {
+    'readonly': ~Eval('active'),
+}
+
+DEPENDS = ['active']
+
 class Employee:
     "Employee"
     __name__ = "company.employee"
 
+    party = fields.Many2One('party.party', 'Party', required=True,
+                            select=True, states=STATES,
+                            depends=DEPENDS)
+    company = fields.Many2One('company.company', 'Company', required=True,
+                              select=True, states=STATES, depends=DEPENDS)
     gender = fields.Selection([
         ('male', 'M'),
         ('female', 'F'),
         ('undefined', 'N/A'),
-    ], 'Gender')
-    designation = fields.Char("Designation", required=True, select=True)
-    dob = fields.Date("Date of Birth", required=True)
-    pan = fields.Char("PAN", size=10, required=True)
-    passport = fields.Char("Passport Number", size=9, required=True)
-    driver_id = fields.Char("Drivers License", required=True)
+    ], 'Gender', states=STATES, depends=DEPENDS)
+    designation = fields.Char("Designation", required=True, 
+                              select=True, states=STATES,
+                              depends=DEPENDS)
+    dob = fields.Date("Date of Birth", required=True,
+                      states=STATES, depends=DEPENDS)
+    pan = fields.Char("PAN", size=10, required=True,
+                      states=STATES, depends=DEPENDS)
+    passport = fields.Char("Passport Number", size=9, required=True,
+                           states=STATES, depends=DEPENDS)
+    driver_id = fields.Char("Drivers License", required=True,
+                            states=STATES, depends=DEPENDS)
+    active = fields.Boolean('Active')
 
     _sql_error_messages = {'uniq_error': 'This field must be unique.',
                            'null_error': 'This field must be not null.'}
 
-    _not_nulls = [('pan_not_null', 'NOT NULL(pan)',
-                   _sql_error_messages['null_error']),
-                  ('passport_not_null', 'NOT NULL(passport)',
-                   _sql_error_messages['null_error']),
-                  ('driver_not_null', 'NOT NULL(driver_id)',
-                   _sql_error_messages['null_error']),
-                  ('dob_not_null', 'NOT NULL(dob)',
-                  _sql_error_messages['null_error'])]
-
-    _uniques = [('pan_unique', 'UNIQUE(pan)',
+    _unique = [('pan', 'UNIQUE(pan)',
                  _sql_error_messages['uniq_error']),
-                ('passport_unique', 'UNIQUE(passport)',
+                ('passport', 'UNIQUE(passport)',
                  _sql_error_messages['uniq_error']),
-                ('driver_unique', 'UNIQUE(driver_id)',
+                ('driver', 'UNIQUE(driver_id)',
                  _sql_error_messages['uniq_error'])]
 
     @classmethod
     def __setup__(cls):
         super(Employee, cls).__setup__()
-        cls._sql_constraints = (#[x for x in cls._not_nulls] + 
-                                [y for y in cls._uniques])
+        cls._sql_constraints = ([x for x in cls._unique])
 
     @classmethod
     def default_gender(cls):
         return 'undefined'
+
+    @classmethod
+    def default_active(cls):
+        return True
