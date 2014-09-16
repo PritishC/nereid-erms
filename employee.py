@@ -53,10 +53,8 @@ class Employee:
     @classmethod
     def __setup__(cls):
         super(Employee, cls).__setup__()
-        cls.party.states = STATES
-        cls.party.depends = DEPENDS
-        cls.company.states = STATES
-        cls.company.depends = DEPENDS
+        
+        cls._set_states_depends(['party', 'company'])
         cls._sql_constraints = ([x for x in cls._unique])
 
     @classmethod
@@ -66,3 +64,10 @@ class Employee:
     @classmethod
     def default_active(cls):
         return True
+
+    @classmethod 
+    def _set_states_depends(cls, arg_list):
+        for string in arg_list:
+            module = getattr(cls, string)
+            module.states = STATES
+            module.depends = DEPENDS
