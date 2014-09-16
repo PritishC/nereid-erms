@@ -1,9 +1,7 @@
 <data>
     <xpath expr="/tree/field[@name='company']" position="after">
-    <field name="name" />
     <field name="designation" />
     <field name="dob" />
-    <field name="name" />
     <field name="pan" />
     <field name="passport" />
     <field name="driver_id" />

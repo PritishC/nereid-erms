@@ -13,7 +13,6 @@ class Employee:
 
     designation = fields.Char("Designation", required=True, select=True)
     dob = fields.Date("Date of Birth", required=True)
-    name = fields.Char("Name", required=True, select=True)
     pan = fields.Char("PAN", required=True)
     passport = fields.Char("Passport Number", required=True)
     driver_id = fields.Char("Drivers License", required=True)
@@ -22,8 +21,6 @@ class Employee:
                   ('passport_not_null', 'NOT NULL(passport)',
                    'null_error'),
                   ('driver_not_null', 'NOT NULL(driver_id)',
-                   'null_error'),
-                  ('name_not_null', 'NOT NULL(name)', 
                    'null_error'),
                   ('dob_not_null', 'NOT NULL(dob)',
                    'null_error')]
