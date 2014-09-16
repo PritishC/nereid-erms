@@ -1,7 +1,13 @@
+# -*- coding: utf-8 -*-
+'''
+
+    :copyright: (c) 2013-14 by Openlabs Technologies & Consulting (P) Ltd.
+    :license: GPLv3, see LICENSE for more details
+
+'''
+
 from trytond.model import fields
-from trytond.pyson import Eval, If
-from trytond.transaction import Transaction
-from trytond import backend
+from trytond.pyson import Eval
 from trytond.pool import Pool, PoolMeta
 
 __all__ = ['Employee']
@@ -13,47 +19,54 @@ STATES = {
 
 DEPENDS = ['active']
 
+
 class Employee:
+
     "Employee"
     __name__ = "company.employee"
 
-    #party = fields.Many2One('party.party', 'Party', required=True,
-    #                        select=True, states=STATES,
-    #                        depends=DEPENDS)
-    #company = fields.Many2One('company.company', 'Company', required=True,
-    #                          select=True, states=STATES, depends=DEPENDS)
     gender = fields.Selection([
         ('male', 'M'),
         ('female', 'F'),
         ('undefined', 'N/A'),
-    ], 'Gender', states=STATES, depends=DEPENDS)
-    designation = fields.Char("Designation", required=True, 
-                              select=True, states=STATES,
-                              depends=DEPENDS)
-    dob = fields.Date("Date of Birth", required=True,
-                      states=STATES, depends=DEPENDS)
-    pan = fields.Char("PAN", size=10, required=True,
-                      states=STATES, depends=DEPENDS)
-    passport = fields.Char("Passport Number", size=9, required=True,
-                           states=STATES, depends=DEPENDS)
-    driver_id = fields.Char("Drivers License", required=True,
-                            states=STATES, depends=DEPENDS)
+    ], 'Gender', required=True,
+        states=STATES, depends=DEPENDS)
+    designation = fields.Char(
+        "Designation", required=True, select=True, states=STATES, 
+        depends=DEPENDS
+    )
+    dob = fields.Date(
+        "Date of Birth", required=True, states=STATES, depends=DEPENDS
+    )
+    pan = fields.Char(
+        "PAN", size=10, required=True, states=STATES, depends=DEPENDS
+    )
+    passport = fields.Char(
+        "Passport Number", size=9, required=True, states=STATES, 
+        depends=DEPENDS
+    )
+    driver_id = fields.Char(
+        "Drivers License", required=True, states=STATES, 
+        depends=DEPENDS
+    )
     active = fields.Boolean('Active')
 
-    _sql_error_messages = {'uniq_error': 'This field must be unique.',
-                           'null_error': 'This field must be not null.'}
+    _sql_error_messages = {
+        'uniq_error': 'This field must be unique.',
+        'null_error': 'This field must be not null.'
+    }
 
     _unique = [('pan', 'UNIQUE(pan)',
-                 _sql_error_messages['uniq_error']),
-                ('passport', 'UNIQUE(passport)',
-                 _sql_error_messages['uniq_error']),
-                ('driver', 'UNIQUE(driver_id)',
-                 _sql_error_messages['uniq_error'])]
+                _sql_error_messages['uniq_error']),
+               ('passport', 'UNIQUE(passport)',
+                _sql_error_messages['uniq_error']),
+               ('driver', 'UNIQUE(driver_id)',
+                _sql_error_messages['uniq_error'])]
 
     @classmethod
     def __setup__(cls):
         super(Employee, cls).__setup__()
-        
+
         cls._set_states_depends(['party', 'company'])
         cls._sql_constraints = ([x for x in cls._unique])
 
@@ -65,8 +78,14 @@ class Employee:
     def default_active(cls):
         return True
 
-    @classmethod 
+    @classmethod
     def _set_states_depends(cls, arg_list):
+        """
+        This method takes a list of model names
+        as arguments (eg: 'party') and sets their
+        attributes - 'states' and 'depends' - to
+        the necessary values.
+        """
         for string in arg_list:
             module = getattr(cls, string)
             module.states = STATES
