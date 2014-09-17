@@ -1,25 +1,17 @@
 <data>
-    <xpath expr="/form/label[@name='company']" position="replace">
-    </xpath>
-    <xpath expr="/form/field[@name='company']" position="replace">
-    </xpath>
-    <xpath expr="/form/label[@name='party']" position="replace">
-    </xpath>
-    <xpath expr="/form/field[@name='party']" position="replace">
-         <group col="20" colspan="2" id="checkboxes">
+    <xpath expr="/form/field[@name='company']" position="after">
+        <group col="20" colspan="2" id="checkboxes">
             <label name="active"/>
             <field name="active" xexpand="0" width="25"/>
         </group>
         <notebook colspan="6">
             <page string="General" id="general">
-                <label name="party"/>
-                <field name="party"/>
-                <label name="company"/>
-                <field name="company"/>
                 <label name="gender"/>
                 <field name="gender"/>
                 <label name="designation" />
                 <field name="designation" />
+                <label name="department" />
+                <field name="department" />
             </page>
             <page string="Personal Details" id="personal">
                 <label name="dob" />

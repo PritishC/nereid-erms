@@ -1,4 +1,8 @@
-#!/home/pritishc/Envs/nereid-erms/bin/python
+# -*- coding: utf-8 -*-
+"""
+    :copyright: (c) 2014 by Openlabs Technologies & Consulting (P) Ltd.
+    :license: GPLv3, see LICENSE for more details
+"""
 import re
 import os
 import sys
@@ -104,8 +108,8 @@ setup(
     name='%s_%s' % (PREFIX, MODULE),
     version=info.get('version', '0.0.1'),
     description="",
-    author="Pritish C",
-    author_email='pritish.chakraborty@openlabs.co.in',
+    author="openlabs",
+    author_email='info@openlabs.co.in',
     url='http://www.openlabs.co.in/',
     package_dir={'trytond.modules.%s' % MODULE: '.'},
     packages=[

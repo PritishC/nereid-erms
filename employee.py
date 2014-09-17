@@ -1,11 +1,8 @@
 # -*- coding: utf-8 -*-
-'''
-
-    :copyright: (c) 2013-14 by Openlabs Technologies & Consulting (P) Ltd.
-    :license: GPLv3, see LICENSE for more details
-
-'''
-
+"""
+    :copyright: (c) 2014 by Openlabs Technologies & Consulting (P) Ltd.
+    :license: BSD, see LICENSE for more details
+"""
 from trytond.model import fields
 from trytond.pyson import Eval
 from trytond.pool import Pool, PoolMeta
@@ -31,9 +28,13 @@ class Employee:
         ('undefined', 'N/A'),
     ], 'Gender', required=True,
         states=STATES, depends=DEPENDS)
-    designation = fields.Char(
-        "Designation", required=True, select=True, states=STATES, 
-        depends=DEPENDS
+    department = fields.Many2One(
+        'company.department', 'Department', states=STATES, depends=DEPENDS)
+    designation = fields.Many2One(
+        "company.designation", "Designation", required=True, states=STATES,
+        depends=DEPENDS.append('department'), domain=[
+            ('department', '=', Eval('department'))
+            ],
     )
     dob = fields.Date(
         "Date of Birth", required=True, states=STATES, depends=DEPENDS
@@ -56,23 +57,22 @@ class Employee:
         'null_error': 'This field must be not null.'
     }
 
-    _unique = [('pan', 'UNIQUE(pan)',
-                _sql_error_messages['uniq_error']),
-               ('passport', 'UNIQUE(passport)',
-                _sql_error_messages['uniq_error']),
-               ('driver', 'UNIQUE(driver_id)',
-                _sql_error_messages['uniq_error'])]
+    _unique = [
+        ('pan', 'UNIQUE(pan)', _sql_error_messages['uniq_error']),
+        ('passport', 'UNIQUE(passport)', _sql_error_messages['uniq_error']),
+        ('driver', 'UNIQUE(driver_id)', _sql_error_messages['uniq_error'])
+    ]
 
     @classmethod
     def __setup__(cls):
         super(Employee, cls).__setup__()
 
         cls._set_states_depends(['party', 'company'])
-        cls._sql_constraints = ([x for x in cls._unique])
+        cls._sql_constraints = (cls._unique)
 
     @classmethod
     def default_gender(cls):
-        return 'undefined'
+        return 'male'
 
     @classmethod
     def default_active(cls):
