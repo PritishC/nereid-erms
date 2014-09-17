@@ -5,10 +5,13 @@
 """
 from trytond.pool import Pool
 from employee import Employee
+from department import Designation, Department
 
 
 def register():
     Pool.register(
+        Department,
+        Designation,
         Employee,
         module='employee', type_='model'
     )

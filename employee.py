@@ -5,7 +5,7 @@
 """
 from trytond.model import fields
 from trytond.pyson import Eval
-from trytond.pool import Pool, PoolMeta
+from trytond.pool import PoolMeta
 
 __all__ = ['Employee']
 __metaclass__ = PoolMeta
@@ -18,7 +18,6 @@ DEPENDS = ['active']
 
 
 class Employee:
-
     "Employee"
     __name__ = "company.employee"
 
@@ -29,12 +28,13 @@ class Employee:
     ], 'Gender', required=True,
         states=STATES, depends=DEPENDS)
     department = fields.Many2One(
-        'company.department', 'Department', states=STATES, depends=DEPENDS)
+        'employee.department', 'Department', required=True, states=STATES,
+        depends=DEPENDS
+    )
     designation = fields.Many2One(
-        "company.designation", "Designation", required=True, states=STATES,
-        depends=DEPENDS.append('department'), domain=[
+        "employee.designation", "Designation", domain=[
             ('department', '=', Eval('department'))
-            ],
+        ], required=True, states=STATES, depends=DEPENDS.append('department')
     )
     dob = fields.Date(
         "Date of Birth", required=True, states=STATES, depends=DEPENDS
@@ -43,11 +43,11 @@ class Employee:
         "PAN", size=10, required=True, states=STATES, depends=DEPENDS
     )
     passport = fields.Char(
-        "Passport Number", size=9, required=True, states=STATES, 
+        "Passport Number", size=9, required=True, states=STATES,
         depends=DEPENDS
     )
     driver_id = fields.Char(
-        "Drivers License", required=True, states=STATES, 
+        "Drivers License", required=True, states=STATES,
         depends=DEPENDS
     )
     active = fields.Boolean('Active')
