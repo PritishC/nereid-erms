@@ -4,8 +4,8 @@
     :license: BSD, see LICENSE for more details.
 """
 from trytond.pool import Pool
-from employee import Employee
-from department import Designation, Department
+from employee import Employee, Designation
+from company import Department
 
 
 def register():

@@ -3,11 +3,11 @@
     :copyright: (c) 2014 by Openlabs Technologies & Consulting (P) Ltd.
     :license: BSD, see LICENSE for more details
 """
-from trytond.model import fields
+from trytond.model import fields, ModelSQL, ModelView
 from trytond.pyson import Eval
 from trytond.pool import PoolMeta
 
-__all__ = ['Employee']
+__all__ = ['Employee', 'Designation']
 __metaclass__ = PoolMeta
 
 STATES = {
@@ -28,7 +28,7 @@ class Employee:
     ], 'Gender', required=True,
         states=STATES, depends=DEPENDS)
     department = fields.Many2One(
-        'employee.department', 'Department', required=True, states=STATES,
+        'company.department', 'Department', required=True, states=STATES,
         depends=DEPENDS
     )
     designation = fields.Many2One(
@@ -70,12 +70,12 @@ class Employee:
         cls._set_states_depends(['party', 'company'])
         cls._sql_constraints = (cls._unique)
 
-    @classmethod
-    def default_gender(cls):
+    @staticmethod
+    def default_gender():
         return 'male'
 
-    @classmethod
-    def default_active(cls):
+    @staticmethod
+    def default_active():
         return True
 
     @classmethod
@@ -90,3 +90,11 @@ class Employee:
             module = getattr(cls, string)
             module.states = STATES
             module.depends = DEPENDS
+
+
+class Designation(ModelSQL, ModelView):
+    'Designation'
+    __name__ = 'employee.designation'
+
+    department = fields.Many2One('company.department', 'Department')
+    name = fields.Char("Name", required=True)
