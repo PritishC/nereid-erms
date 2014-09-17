@@ -13,7 +13,7 @@ class Department(ModelSQL, ModelView):
     'Department'
     __name__ = 'employee.department'
 
-    name = fields.Char("Department")
+    name = fields.Char("Name")
 
 
 class Designation(ModelSQL, ModelView):
@@ -21,4 +21,4 @@ class Designation(ModelSQL, ModelView):
     __name__ = 'employee.designation'
 
     department = fields.Many2One('employee.department', 'Department')
-    name = fields.Char("Designation")
+    name = fields.Char("Name")

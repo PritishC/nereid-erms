@@ -44,7 +44,7 @@ class Employee:
     )
     passport = fields.Char(
         "Passport Number", size=9, required=True, states=STATES,
-        depends=DEPENDS
+        depends=DEPENDS, select=True
     )
     driver_id = fields.Char(
         "Drivers License", required=True, states=STATES,

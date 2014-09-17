@@ -11,7 +11,7 @@
             <field name="model">company.employee</field>
             <field name="inherit" ref="company.employee_view_form" />
             <field name="name">employee_form</field>
-        </record>
+    	</record>
         <menuitem parent="party.menu_party" action="company.act_employee_form"
             id="menu_employee_form"/>
     </data>

@@ -9,9 +9,9 @@
                 <label name="gender"/>
                 <field name="gender"/>
                 <label name="designation" />
-                <field name="designation" />
+                <field name="designation" widget="selection" />
                 <label name="department" />
-                <field name="department" />
+                <field name="department" widget="selection" />
             </page>
             <page string="Personal Details" id="personal">
                 <label name="dob" />

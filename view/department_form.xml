@@ -1,0 +1,4 @@
+<form string="Department">
+    <label name="name"/>
+    <field name="name" /> 
+</form>
