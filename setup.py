@@ -89,7 +89,7 @@ requires = []
 MODULE2PREFIX = {}
 
 MODULE = "employee"
-PREFIX = "Openlabs Technologies & Consulting (P) Ltd"
+PREFIX = "openlabs"
 for dep in info.get('depends', []):
     if not re.match(r'(ir|res|webdav)(\W|$)', dep):
         requires.append(
@@ -108,7 +108,7 @@ setup(
     name='%s_%s' % (PREFIX, MODULE),
     version=info.get('version', '0.0.1'),
     description="",
-    author="openlabs",
+    author="Openlabs Technologies & Consulting (P) Ltd",
     author_email='info@openlabs.co.in',
     url='http://www.openlabs.co.in/',
     package_dir={'trytond.modules.%s' % MODULE: '.'},

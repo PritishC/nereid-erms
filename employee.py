@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
 """
     :copyright: (c) 2014 by Openlabs Technologies & Consulting (P) Ltd.
-    :license: BSD, see LICENSE for more details
+    :license: GPLv3, see LICENSE for more details
 """
 from trytond.model import fields, ModelSQL, ModelView
 from trytond.pyson import Eval
 from trytond.pool import PoolMeta
+from trytond.transaction import Transaction
 
 __all__ = ['Employee', 'Designation']
 __metaclass__ = PoolMeta
@@ -78,6 +79,10 @@ class Employee:
     def default_active():
         return True
 
+    @staticmethod
+    def default_company():
+        return Transaction().context.get('company')
+
     @classmethod
     def _set_states_depends(cls, arg_list):
         """
@@ -96,5 +101,7 @@ class Designation(ModelSQL, ModelView):
     'Designation'
     __name__ = 'employee.designation'
 
-    department = fields.Many2One('company.department', 'Department')
+    department = fields.Many2One(
+        'company.department', 'Department', required=True
+    )
     name = fields.Char("Name", required=True)

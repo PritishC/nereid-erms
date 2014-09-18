@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
     :copyright: (c) 2014 by Openlabs Technologies & Consulting (P) Ltd.
-    :license: BSD, see LICENSE for more details
+    :license: GPLv3, see LICENSE for more details
 """
 from trytond.model import fields, ModelSQL, ModelView
 
