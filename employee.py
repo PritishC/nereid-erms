@@ -6,7 +6,6 @@
 from trytond.model import fields, ModelSQL, ModelView
 from trytond.pyson import Eval
 from trytond.pool import PoolMeta
-from trytond.transaction import Transaction
 
 __all__ = ['Employee', 'Designation']
 __metaclass__ = PoolMeta
@@ -35,7 +34,7 @@ class Employee:
     designation = fields.Many2One(
         "employee.designation", "Designation", domain=[
             ('department', '=', Eval('department'))
-        ], required=True, states=STATES, depends=DEPENDS.append('department')
+        ], states=STATES, depends=['active', 'department'], required=True
     )
     dob = fields.Date(
         "Date of Birth", required=True, states=STATES, depends=DEPENDS
@@ -78,10 +77,6 @@ class Employee:
     @staticmethod
     def default_active():
         return True
-
-    @staticmethod
-    def default_company():
-        return Transaction().context.get('company')
 
     @classmethod
     def _set_states_depends(cls, arg_list):

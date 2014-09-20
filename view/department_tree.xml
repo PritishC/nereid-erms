@@ -1,3 +1,4 @@
 <tree string="Department">
     <field name="name" />
+    <field name="company" />
 </tree>
