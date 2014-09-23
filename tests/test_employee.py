@@ -8,6 +8,7 @@
 import unittest
 from trytond.transaction import Transaction
 from trytond.tests.test_tryton import POOL, DB_NAME, USER, CONTEXT
+from trytond.error import UserError
 
 
 class TestEmployee(unittest.TestCase):
@@ -60,59 +61,83 @@ class TestEmployee(unittest.TestCase):
             'department': self.department.id
         }])
 
-    def _create_employee(self):
-        """
-        Set up a dummy Employee
-        """
-        self.employee, = self.Employee.create([{
-            'party': self.party_emp.id,
-            'company': self.company.id,
-            'gender': 'male',
-            'designation': self.desig2.id,
-            'department': self.department.id,
-            'dob': '1992-08-08',
-            'pan': '1234567891',
-            'passport': '123456789',
-            'driver_id': 'ABCD1234',
-        }])
-
     def test0001employee_creation(self):
         """
-        Test dummy employee
+        Test dummy employee.
         """
-        import datetime
         with Transaction().start(DB_NAME, USER, CONTEXT):
             self.setup_basics()
             self._populate_department()
-            self._create_employee()
 
-            test_tuple = 'party.party,' + str(self.party_emp.id)
-            self.assertEquals(str(self.employee.party), test_tuple)
+            self.employee, = self.Employee.create([{
+                'party': self.party_emp.id,
+                'company': self.company.id,
+                'gender': 'male',
+                'designation': self.desig2.id,
+                'department': self.department.id,
+                'dob': '1992-08-08',
+                'pan': '1234567891',
+                'passport': '123456789',
+                'driver_id': 'ABCD1234',
+            }])
 
-            test_tuple = 'company.company,' + str(self.company.id)
-            self.assertEquals(str(self.employee.company), test_tuple)
-
-            self.assertEquals(self.employee.gender, 'male')
-            self.assertEquals(self.employee.dob, datetime.date(1992, 8, 8))
-            self.assertEquals(self.employee.pan, '1234567891')
-            self.assertEquals(self.employee.passport, '123456789')
-            self.assertEquals(self.employee.driver_id, 'ABCD1234')
-
-            test_tuple = 'company.department,' + str(self.department.id)
-            self.assertEquals(str(self.employee.department), test_tuple)
-
-            test_tuple = 'employee.designation,' + str(self.desig2.id)
-            self.assertEquals(str(self.employee.designation), test_tuple)
+            self.assert_(self.employee)
 
     def test0005employee_uniqueness(self):
         """
-        Cannot create employee with exactly same details
+        Cannot create employees where unique fields are the same.
         """
-        from trytond.error import UserError
         with Transaction().start(DB_NAME, USER, CONTEXT):
             self.setup_basics()
             self._populate_department()
-            self._create_employee()
 
-            with self.assertRaises(UserError):
-                self._create_employee()
+            self.employee, = self.Employee.create([{
+                'party': self.party_emp.id,
+                'company': self.company.id,
+                'gender': 'male',
+                'designation': self.desig2.id,
+                'department': self.department.id,
+                'dob': '1992-08-08',
+                'pan': '1234567891',
+                'passport': '123456789',
+                'driver_id': 'ABCD1234',
+            }])
+
+            # PAN can't be the same.
+            self.assertRaises(UserError, self.Employee.create, [{
+                'party': self.party_emp.id,
+                'company': self.company.id,
+                'gender': 'male',
+                'designation': self.desig2.id,
+                'department': self.department.id,
+                'dob': '1992-08-08',
+                'pan': '1234567891',
+                'passport': '987654321',
+                'driver_id': 'DCB4321',
+            }])
+
+            # Passport can't be the same.
+            self.assertRaises(UserError, self.Employee.create, [{
+                'party': self.party_emp.id,
+                'company': self.company.id,
+                'gender': 'male',
+                'designation': self.desig2.id,
+                'department': self.department.id,
+                'dob': '1992-08-08',
+                'pan': '9876543219',
+                'passport': '123456789',
+                'driver_id': 'ADCB4321',
+            }])
+
+            # Driver's license ID can't be the same.
+            self.assertRaises(UserError, self.Employee.create, [{
+                'party': self.party_emp.id,
+                'company': self.company.id,
+                'gender': 'male',
+                'designation': self.desig2.id,
+                'department': self.department.id,
+                'dob': '1992-08-08',
+                'pan': '1234567811',
+                'passport': '987654321',
+                'driver_id': 'ABCD1234',
+            }])
