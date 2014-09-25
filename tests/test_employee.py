@@ -65,9 +65,10 @@ class TestEmployee(unittest.TestCase):
         """
         Test dummy employee.
         """
-        with Transaction().start(DB_NAME, USER, CONTEXT):
+        with Transaction().start(DB_NAME, USER, context=CONTEXT) as transaction:
             self.setup_basics()
             self._populate_department()
+            transaction.set_context(company=self.company.id)
 
             self.employee, = self.Employee.create([{
                 'party': self.party_emp.id,
@@ -82,6 +83,25 @@ class TestEmployee(unittest.TestCase):
             }])
 
             self.assert_(self.employee)
+
+            self.employee, = self.Employee.create([{
+                'party': self.party_emp.id,
+                'company': self.company.id,
+                'designation': self.desig2.id,
+                'department': self.department.id,
+                'dob': '1992-08-08',
+                'pan': '1234567890',
+                'passport': '123456780',
+                'driver_id': 'ABCD123',
+            }])
+
+            self.assertEquals(self.employee.gender, 'male')
+
+            self.department2, = self.Department.create([{
+                'name': 'IT',
+            }])
+
+            self.assertEquals(self.department.company, self.company)
 
     def test0005employee_uniqueness(self):
         """
@@ -115,7 +135,6 @@ class TestEmployee(unittest.TestCase):
                 'passport': '987654321',
                 'driver_id': 'DCB4321',
             }])
-
             # Passport can't be the same.
             self.assertRaises(UserError, self.Employee.create, [{
                 'party': self.party_emp.id,
@@ -141,3 +160,5 @@ class TestEmployee(unittest.TestCase):
                 'passport': '987654321',
                 'driver_id': 'ABCD1234',
             }])
+
+
