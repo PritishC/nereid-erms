@@ -1,0 +1,5 @@
+[run]
+source = trytond.modules.employee
+
+[report]
+omit = */tests/*, */fabfile.py
